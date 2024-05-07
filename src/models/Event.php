@@ -9,10 +9,10 @@ class Event
     private string $name;
     private int $organiser_id;
     private string $date;
-    private string $start_time;
-    private string $end_time;
+    private ?string $start_time;
+    private ?string $end_time;
 
-    function __construct($name, $organiser_id, $date, $id = 0, $start_time = null, $end_time = null)
+    function __construct($name, $organiser_id, $date, $start_time = null, $end_time = null, $id = 0)
     {
         $this->id = $id;
         $this->name = $name;
@@ -24,6 +24,10 @@ class Event
 
     public function getId(): int {
         return $this->id;
+    }
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
     public function getName(): string {
         return $this->name;
@@ -41,43 +45,52 @@ class Event
         return $this->end_time;
     }
 
-    function create()
+    /**
+     * Inserts the event into the database and returns the id of the event
+     * @return int
+     */
+    function create(): int
     {
-        Database::getInstance()->getConnection()->query("INSERT INTO event (name, organiser_id, date, start_time, end_time) 
-                                                  VALUES ('$this->name',
-                                                          '$this->organiser_id',
-                                                          '$this->date',
-                                                          '$this->start_time',
-                                                          '$this->end_time')");
-        return Database::getInstance()->getConnection()->insert_id;
+        $stmt = Database::getInstance()->getConnection()->prepare("INSERT INTO event (name, organiser_id, date, start_time, end_time) 
+                                                  VALUES (?,?,?,?,?)");
+        $stmt->bind_param("sisss",$this->name,$this->organiser_id,$this->date,$this->start_time,$this->end_time);
+        $stmt->execute();
+        return $stmt->insert_id;
 
     }
 
     function update()
     {
-        Database::getInstance()->getConnection()->query("UPDATE event 
-                                                SET name='$this->name',
-                                                    organiser=$this->organiser_id,
-                                                    date='$this->date',
-                                                    start_time='$this->start_time',
-                                                    end_time='$this->end_time'
-                                                WHERE id = $this->id");
+        $stmt = Database::getInstance()->getConnection()->prepare("UPDATE event
+                                                  SET name = ?, organiser_id = ?,date= ?, start_time = ?, end_time = ? WHERE id = ?");
+        $stmt->bind_param("sisssi",$this->name,$this->organiser_id,$this->date,$this->start_time,$this->end_time,$this->id);
+        $stmt->execute();
     }
 
-    static function get($id)
+    static function get($id): ?array
     {
-        $result = Database::getInstance()->getConnection()->query("SELECT name, date, start_time, end_time FROM event WHERE id = $id");
-        return $result->fetch_row();
+        $stmt = Database::getInstance()->getConnection()->prepare("SELECT * FROM event WHERE id = ?");
+        $stmt->bind_param("i",$id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        if (empty($result)) {
+            return null;
+        }
+        return $result;
     }
-    static function getAll()
+    static function getAll(): array
     {
-        $result = Database::getInstance()->getConnection()->query("SELECT user.first_name,user.last_name, name, date, start_time, end_time 
-                                                            FROM event JOIN user ON user.id = event.organiser_id ORDER BY name");
+        $result = Database::getInstance()->getConnection()->query("SELECT * FROM event ");
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    function delete($id)
+    static function delete($id)
     {
-        Database::getInstance()->getConnection()->query("DELETE * FROM event WHERE id = $id");
+        $stmt = Database::getInstance()->getConnection()->prepare("DELETE FROM event_attributes WHERE event_id = ?");
+        $stmt->bind_param("i",$id);
+        $stmt->execute();
+        $stmt->prepare("DELETE FROM event WHERE id = ?");
+        $stmt->bind_param("i",$id);
+        $stmt->execute();
     }
 }

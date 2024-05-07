@@ -23,7 +23,7 @@ body {
 input, select {
     padding: 0.25rem;
     margin-top: 0.25rem;
-    border: 1px solid #000000;
+    border: 1px solid var(--body-text-color);
 
 }
 button {
@@ -31,11 +31,19 @@ button {
     margin: 0.75rem 0;
     border: 0;
     font-weight: 700;
+    cursor: pointer;
 }
 
 .title {
+    padding: 0.5rem;
     font-size: 1.875rem;
     line-height: 2.25rem;
+    font-weight: 700;
+}
+.subtitle {
+    padding: 0.5rem;
+    font-size: 1.50rem;
+    line-height: 2rem;
     font-weight: 700;
 }
 
@@ -47,7 +55,7 @@ button {
     justify-content: space-between;
 }
 
-.nav {
+.element_row {
     display: flex;
     flex-direction: row;
     gap: 1rem;
@@ -63,8 +71,6 @@ button {
 
     text-decoration: none;
     color: var(--title-text-color);
-    font-size: 1.5rem;
-    line-height: 2rem;
     padding: 1rem;
 }
 .nav-site:hover {
@@ -75,25 +81,39 @@ button {
 
 .labeled_input {
     display: flex;
-    margin: 0.75rem 0;
+    margin: 0.75rem 0 0.75rem 0.5rem;
     flex-direction: column;
     justify-content: flex-start;
 }
-
-
-
-.submit_button {
-    background: var(--button-bg-color);
-    color: var(--button-text-color);
+.attribute-grid {
+    display: grid;
+    grid-template-columns: repeat(12,minmax(0,1fr));
 }
 
-.delete_button {
+.grid-element {
+    grid-column: span 4 /span 4;
+}
+
+.grid-delete-button {
+    margin-top: auto;
+    margin-bottom: 0.75rem;
+    background: var(--warning-bg-color);
+    color:var(--warning-text-color);
+}
+
+.submit-button {
+    background: var(--button-bg-color);
+    color: var(--button-text-color);
+    width: 200px;
+}
+
+.delete-button {
     background: var(--warning-bg-color);
     color: var(--warning-text-color);
+    width: 200px;
 }
 
 .centered {
-    padding: 1rem;
     max-width: 1280px;
-    margin: auto;
+    margin:0.75rem auto;
 }

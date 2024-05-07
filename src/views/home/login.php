@@ -19,7 +19,7 @@ include "src/views/layout/header.php";
         <label for="password"> Passwort: </label>
         <input type="password" name="password" id="password">
     </div>
-    <button type="submit" class="submit_button" name="login">
+    <button type="submit" class="submit-button" name="login">
         Anmelden
     </button>
 </form>

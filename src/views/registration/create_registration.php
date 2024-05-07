@@ -21,7 +21,7 @@ include "src/views/layout/header.php";
         <input type="text" name="last_name" id="last_name">
 
     </div>
-    <button type="submit" class="submit_button" name="send_registration">
+    <button type="submit" class="submit-button" name="send_registration">
         Anmeldung abschicken
     </button>
 </form>

@@ -25,7 +25,7 @@ include "../../../src/views/layout/header.php";
             </option>
         </select>
     </div>
-    <button class="submit_button" name="create_user">
+    <button class="submit-button" name="create_user">
         Benutzer erstellen
     </button>
 </form>

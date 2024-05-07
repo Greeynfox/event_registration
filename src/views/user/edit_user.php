@@ -25,10 +25,10 @@ include "src/views/layout/header.php";
             </option>
         </select>
     </div>
-    <button disabled class="submit_button" name="save_registration">
+    <button disabled class="submit-button" name="save_registration">
         Änderungen speichern
     </button>
-    <button class="delete_button" name="delete_registration">
+    <button class="delete-button" name="delete_registration">
         Anmeldung löschen
     </button>
 </form>

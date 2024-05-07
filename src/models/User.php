@@ -5,31 +5,24 @@ use src\Database;
 class User
 {
 
-    private ?int $id;
-    private string $first_name;
-    private string $last_name;
+    private int $id;
+    private string $username;
     private ?string $password;
     private int $authorisation;
 
-    function __construct($first_name, $last_name, $authorisation, $id = null, $password = null)
+    function __construct($username, $authorisation, $password, $id = 0)
     {
-        $this->id = $id;
-        $this->first_name = $first_name;
-        $this->last_name = $last_name;
+        $this->id = (int)$id; //cast is necessary, as the validate() function of the user controller returns a string
+        $this->username = $username;
         $this->password = $password;
-        $this->authorisation = (int)$authorisation;
+        $this->authorisation = (int)$authorisation;//cast is necessary, as the validate() function of the user controller returns a string
 
     }
     public function getId(): int {
         return $this->id;
     }
-
-    public function getFirstName(): string {
-        return $this->first_name;
-    }
-
-    public function getLastName(): string {
-        return $this->last_name;
+    public function getUsername(): string {
+        return $this->username;
     }
 
     public function getPassword(): string {
@@ -40,11 +33,14 @@ class User
         return $this->authorisation;
     }
 
-    function create()
+    /**
+     * Returns the id of the created User
+     * @return int
+     */
+    function create(): int
     {
-        Database::getInstance()->getConnection()->query("INSERT INTO user (first_name, last_name, password, authorisation) 
-                                                VALUES ('$this->first_name',
-                                                        '$this->last_name',
+        Database::getInstance()->getConnection()->query("INSERT INTO user (username, password, authorisation) 
+                                                VALUES ('$this->username',
                                                         '$this->password',
                                                         $this->authorisation)");
         return Database::getInstance()->getConnection()->insert_id;
@@ -53,8 +49,7 @@ class User
     function update()
     {
         Database::getInstance()->getConnection()->query("UPDATE user
-                                                SET first_name='$this->first_name',
-                                                    last_name='$this->last_name',
+                                                SET username='$this->username',
                                                     authorisation=$this->authorisation 
                                                 WHERE id = $this->id");
     }

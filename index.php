@@ -1,15 +1,15 @@
 <?php
+session_start();
 require "vendor/autoload.php";
 require "config/web.php";
-
 use src\controllers\EventController;
 use src\controllers\LoginController;
 use src\controllers\RegistrationController;
 use src\controllers\UserController;
 
-
+$_SESSION["user_id"] = 3;
 $requestUri = $_SERVER['REQUEST_URI'];
-echo $requestUri;
+
 
 $action = "";
 $controller = "";
@@ -18,6 +18,9 @@ if (!empty($_GET)) {
     $action = $_GET['action'];
     $controller = $_GET['controller'];
 }
+
+// routes are determined by url-params(GET), the form data(POST) is processed inside the controllers
+
 switch ($controller) {
     case "login":
         $controller = new LoginController();
@@ -30,11 +33,23 @@ switch ($controller) {
         break;
     case "user":
         $controller = new UserController();
-        switch ($action) {
-            case "create":
-                print_r($_POST);
-                $controller->create();
-                break;
-        }
         break;
 }
+switch ($action) {
+    case "create":
+        $controller->create();
+        break;
+    case "edit":
+        if (isset($_POST["delete_event"])) {
+            $controller->delete($_GET["id"]);
+        }
+        $controller->update();
+        break;
+    case "show":
+        $controller->show($_GET["id"]);
+        break;
+    case "showAll":
+        $controller->showAll();
+        break;
+}
+//include "src/views/event/edit_event.php";

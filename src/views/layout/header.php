@@ -1,7 +1,4 @@
-<?php
-session_start();
-require_once "../../../config/web.php"
-?>
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -12,9 +9,9 @@ require_once "../../../config/web.php"
 </head>
 <body>
 <header class="nav-header">
-    <nav class="nav">
+    <nav class="element_row">
         <a class="title nav-home" href="<?= WEBROOT ?>src/views/registration/create_registration.php"> Anmeldung für Veranstaltungen</a>
-        <a class="title nav-site" href="<?= WEBROOT ?>src/views/home/login.php">Veranstalter-Login</a>
+        <a class="subtitle nav-site" href="<?= WEBROOT ?>src/views/home/login.php">Veranstalter-Login</a>
     </nav>
     <img width="192" src="<?= WEBROOT ?>res/img/logo-bbw.svg" alt="Berufsbildungswerk ICP München">
 </header>

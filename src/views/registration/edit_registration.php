@@ -13,10 +13,10 @@ include "src/views/layout/header.php";
     </div>
 </div>
 <form class="centered" action="<?= WEBROOT ?>index.php?action=edit&controller=registration" method="post">
-    <button type="submit" disabled class="submit_button" name="save_registration">
+    <button type="submit" disabled class="submit-button" name="save_registration">
         Änderungen speichern
     </button>
-    <button type="submit" class="delete_button" name="delete_registration">
+    <button type="submit" class="delete-button" name="delete_registration">
         Anmeldung löschen
     </button>
 </form>

@@ -5,20 +5,18 @@ use src\Database;
 
 class Attribute
 {
-    private ?int $id;
+    private int $id;
     private string $name;
-    private bool $value;
-    private string $additional_information;
     private int $mru_counter;
+    private int $type;
 
-
-    function __construct($name, $value,$additional_information, $mru_counter, $id = null)
+    function __construct($name, $type, $mru_counter = 1, $id = 0)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->value = $value;
-        $this->additional_information= $additional_information;
         $this->mru_counter = $mru_counter;
+        $this->type = (int)$type;
+
     }
 
     public function getId(): int {
@@ -27,54 +25,67 @@ class Attribute
     public function getName(): string {
         return $this->name;
     }
-    public function getValue(): bool {
-        return $this->value;
-    }
-    public function getAdditionalInformation(): string
-    {
-        return $this->additional_information;
-    }
     public function getMRU_Counter(): int {
         return $this->mru_counter;
     }
+    public function getType(): int {
+        return $this->type;
+    }
 
     /**
-     * Returns the id of the created User
+     * Inserts the attribute into the database and returns the id of the attribute
      * @return int
      */
     function create(): int
     {
-        Database::getInstance()->getConnection()->query("INSERT INTO attribute (name, value,additional_information,mru_counter) 
-                                                  VALUES ('$this->name',
-                                                          $this->value,
-                                                          '$this->additional_information',
-                                                          $this->mru_counter)");
-        return Database::getInstance()->getConnection()->insert_id;
+        $stmt = Database::getInstance()->getConnection()->prepare("INSERT INTO attribute (name,mru_counter,type) 
+                                                  VALUES (?,?,?)");
+        $stmt->bind_param("sii",$this->name,$this->mru_counter,$this->type);
+        $stmt->execute();
+        return $stmt->insert_id;
     }
 
     function update()
     {
-        Database::getInstance()->getConnection()->query("UPDATE attribute 
-                                                    SET name='$this->name',
-                                                        value='$this->value',
-                                                        mru_counter=$this->mru_counter
-                                                    WHERE id = $this->id");
+        $stmt = Database::getInstance()->getConnection()->prepare("UPDATE attribute 
+                                                    SET name = ?, mru_counter = ?, type = ? WHERE id = ?");
+        $stmt->bind_param("siii",$this->name,$this->mru_counter,$this->type,$this->id);
+        $stmt->execute();
     }
 
-    static function get($id)
+    static function get($id): ?array
     {
-        $result = Database::getInstance()->getConnection()->query("SELECT name,value,additional_information,mru_counter FROM attribute WHERE id = $id");
-        return $result->fetch_row();
+        $stmt = Database::getInstance()->getConnection()->prepare("SELECT * FROM attribute WHERE id = ?");
+        $stmt->bind_param("i",$id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        if (empty($result)) {
+            return null;
+        }
+        return $result;
+    }
+    static function getByName($name): ?array
+    {
+        $stmt = Database::getInstance()->getConnection()->prepare("SELECT * FROM attribute WHERE name = ?");
+        $stmt->bind_param("s",$name);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        if (empty($result)) {
+            return null;
+        }
+        return $result;
     }
 
-    static function getAll()
+    static function getAll(): array
     {
-        $result = Database::getInstance()->getConnection()->query("SELECT name,value,additional_information,mru_counter FROM attribute ");
+        $result = Database::getInstance()->getConnection()->query("SELECT * FROM attribute");
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     function delete($id)
     {
-        Database::getInstance()->getConnection()->query("DELETE * FROM attributes WHERE id = $id");
+        $stmt = Database::getInstance()->getConnection()->prepare("DELETE FROM attribute WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
     }
 }

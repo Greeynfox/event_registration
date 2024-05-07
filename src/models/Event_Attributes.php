@@ -12,4 +12,18 @@ class Event_Attributes
         $this->event_id = $event_id;
         $this->attributes_id = $attributes_id;
     }
+
+    function create () {
+        Database::getInstance()->getConnection()->query("INSERT INTO event_attributes (attribute_id, event_id) 
+                                                VALUES ($this->attributes_id,$this->event_id)");
+    }
+
+    static function getEventAttributes ($event_id) : array {
+        $result = Database::getInstance()->getConnection()->query("SELECT * FROM attribute a 
+                                                JOIN event_attributes ea ON a.id = ea.attribute_id
+                                                WHERE event_id = $event_id");
+        return $result->fetch_all(MYSQLI_ASSOC);
+
+    }
+
 }
