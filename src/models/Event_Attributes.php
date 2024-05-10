@@ -19,11 +19,24 @@ class Event_Attributes
     }
 
     static function getEventAttributes ($event_id) : array {
-        $result = Database::getInstance()->getConnection()->query("SELECT * FROM attribute a 
+        $stmt = Database::getInstance()->getConnection()->prepare("SELECT a.*, event_id FROM attribute a 
                                                 JOIN event_attributes ea ON a.id = ea.attribute_id
-                                                WHERE event_id = $event_id");
+                                                WHERE event_id = ?");
+        $stmt->bind_param("i", $event_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
 
+    }
+    static function delete($event_id,$attribute_id) {
+        $stmt = Database::getInstance()->getConnection()->prepare("DELETE FROM event_attributes WHERE event_id = ? AND attribute_id = ?");
+        $stmt->bind_param("ii",$event_id,$attribute_id);
+        $stmt->execute();
+    }
+    static function deleteAll($id) {
+        $stmt = Database::getInstance()->getConnection()->prepare("DELETE FROM event_attributes WHERE event_id = ?");
+        $stmt->bind_param("i",$id);
+        $stmt->execute();
     }
 
 }

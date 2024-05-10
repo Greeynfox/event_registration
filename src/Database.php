@@ -14,8 +14,7 @@ class Database
     {
 
         $this->connection = new mysqli(SERVER, USERNAME, PASSWORD, DATABASE);
-        mysqli_report(MYSQLI_REPORT_ALL);
-        // Check connection
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         if ($this->connection->connect_error) {
             die("Connection failed: " . $this->connection->connect_error);
         }

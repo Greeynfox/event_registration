@@ -12,13 +12,13 @@ class UserController
 {
 
     public function create() {
-        $user = new User(...Helper::validate($_POST["username"],$_POST["password"],$_POST["user_role"]));
+        $user = new User(...Helper::html_validate($_POST["username"],$_POST["password"],$_POST["user_role"]));
         $id = $user->create();
         $user = User::get($id); // get() call to ensure all data of the user is available in the edit-view
         include "src/views/user/edit_user.php";
     }
     public function update() {
-        $user = new User(...Helper::validate($_POST["firstname"],$_POST["lastname"],$_POST["user_role"],$_POST["id"]));
+        $user = new User(...Helper::html_validate($_POST["firstname"],$_POST["lastname"],$_POST["user_role"],$_POST["id"]));
         $user->update();
     }
     public function show($id) {

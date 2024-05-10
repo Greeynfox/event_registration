@@ -4,7 +4,6 @@ include "src/views/layout/header.php";
 <div class="title centered"> Veranstaltung bearbeiten - <?= $event->getName() ?> </div>
 <form class="centered" action="<?= WEBROOT ?>index.php?action=edit&controller=event&id=<?= $event->getId() ?>" method="post">
     <input hidden="" name="event_id" value="<?= $event->getId() ?>">
-    <input hidden="" name="event_id" value="<?= $event->getId() ?>">
     <div class="labeled_input">
         <label for="name"> Name: </label>
         <input type="text" name="name" id="name" value="<?= $event->getName() ?>">
@@ -25,8 +24,8 @@ include "src/views/layout/header.php";
     <div class="attribute-grid" id="attribute_area">
         <?php foreach ($event_attributes as $event_attribute) {
             ?>
-            <div class="grid-element element_row">
-                <input hidden="" name="attribute_id[]" value="<?= $event_attribute->getId() ?>">
+            <div class="attribute-create-grid-element element_row">
+                <input hidden="" name="attribute_ids[]" value="<?= $event_attribute->getId() ?>">
                 <div class="labeled_input">
                     <label for="attribute_name"> Attributsname: </label>
                     <input type="text" value="<?= $event_attribute->getName() ?>" name="attributes[]"
@@ -46,13 +45,16 @@ include "src/views/layout/header.php";
             </div>
         <?php } ?>
     </div>
+
+    <div id="deleted_items">
+
+    </div>
     <div class="element_row">
         <button type="button" class="submit-button" id="add_attribute">
             Attribut Hinzufügen
         </button>
 
     </div>
-
     <div class="element_row">
         <button type="submit"  class="submit-button" name="save_event">
             Änderungen speichern
@@ -63,8 +65,8 @@ include "src/views/layout/header.php";
     </div>
 </form>
 <template>
-    <div class="grid-element element_row">
-        <input hidden="" name="attribute_id[]" value="0">
+    <div class="attribute-create-grid-element element_row">
+        <input hidden="" name="attribute_ids[]" value="0">
         <div class="labeled_input">
             <label for="attribute_name"> Attributsname: </label>
             <input type="text" name="attributes[]" id="attribute_name">
@@ -86,19 +88,22 @@ include "src/views/layout/header.php";
     //    e.preventDefault();
     //});
     let attribute_area = document.getElementById("attribute_area");
-
     let remove_attribute = document.getElementsByClassName("grid-delete-button");
+
     for (let i = 0; i < remove_attribute.length; i++) {
         remove_attribute[i].addEventListener("click", (e) => {
+            // remove the grid element(consisting of name-input,type-select and delete-button)
             e.target.parentNode.remove();
         });
     }
 
     let add_attribute = document.getElementById("add_attribute");
     add_attribute.addEventListener("click", () => {
+        //create a new grid element based on the template given in the html <template>-tag
         let template = document.getElementsByTagName("template")[0].content;
         let clone = template.cloneNode(true);
         attribute_area.appendChild(clone);
+        //add delete event listener
         attribute_area.lastElementChild.getElementsByClassName("grid-delete-button")[0].addEventListener("click", (e) => {
             e.target.parentNode.remove();
         });

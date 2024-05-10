@@ -86,10 +86,7 @@ class Event
 
     static function delete($id)
     {
-        $stmt = Database::getInstance()->getConnection()->prepare("DELETE FROM event_attributes WHERE event_id = ?");
-        $stmt->bind_param("i",$id);
-        $stmt->execute();
-        $stmt->prepare("DELETE FROM event WHERE id = ?");
+        $stmt = Database::getInstance()->getConnection()->prepare("DELETE FROM event WHERE id = ?");
         $stmt->bind_param("i",$id);
         $stmt->execute();
     }

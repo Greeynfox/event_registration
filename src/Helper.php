@@ -9,11 +9,12 @@ class Helper
      * @param ...$params
      * @return array
      */
-    public static function validate(...$params): array
+    public static function html_validate(...$params): array
     {
         foreach ($params as &$param) {
             $param = htmlspecialchars($param);
         }
+        unset($param);
         return $params;
 
     }

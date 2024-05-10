@@ -38,7 +38,7 @@ include "src/views/layout/header.php";
     </button>
 </form>
 <template>
-    <div class="grid-element element_row">
+    <div class="attribute-create-grid-element element_row">
         <div class="labeled_input">
             <label for="attribute_name"> Attributsname: </label>
             <input type="text" name="attributes[]" id="attribute_name">
@@ -65,7 +65,7 @@ include "src/views/layout/header.php";
     });
 
     remove_attributes.addEventListener("click", () => {
-        let attributes = attribute_area.getElementsByClassName("grid-element");
+        let attributes = attribute_area.getElementsByClassName("attribute-create-grid-element");
         if(attributes.length > 0) {
             attributes[attributes.length - 1].remove();
         }
