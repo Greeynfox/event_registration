@@ -1,0 +1,109 @@
+1. Einleitung
+    1. Projektumfeld
+        Im Berufsbildungswerk der Stiftung ICP erhalten junge Menschen die Möglichkeit, eine
+        Berufsausbildung in sechs verschiedenen Berufsfeldern, darunter Wirtschaft und Verwaltung,
+        Informationstechnik und Orthopädietechnik, zu absolvieren. Im Rahmen der Ausbildung
+        erhalten die Teilnehmenden eine individuelle Förderung, die auf ihre körperlichen und geistigen
+        Fähigkeiten abgestimmt ist. Dadurch soll den Auszubildenden der Zugang zum Arbeitsmarkt,
+        und somit eine erfolgreiche berufliche Integration ermöglicht werden.
+        Das Projekt wird in der Abteilung für Informationstechnik im Berufsbildungswerk der Stiftung ICP
+        München umgesetzt.
+    2. Projektziel
+        Im Berufsbildungswerk der Stiftung ICP gibt es verschiedene Veranstaltungen, die von
+        unterschiedlichen Personen organisiert werden. Für diese können sich Interessierte über
+        verschiedene Wege anmelden, meistens per E-Mail an den Veranstalter oder mit Microsoft Forms erstellte Umfragen über Teams.
+        Aufgrund des Projektumfeldes gibt es natürlich einige Auszubildende mit individuellen
+        Bedürfnissen,auf die anhängig von der Art der Veranstaltung geachtet werden müssen (z.B. Platzbedarf
+        für Rollstuhlfahrer).
+
+        Das Ziel des Projektes ist es, für die Auszubildenden/Interessierten eine einheitliche Oberfläche zur Anmeldung an Veranstaltungen zu schaffen
+        und vor allem den Veranstaltern eine bessere Übersicht über die Auszubildenden und ihre individuellen Bedürfnisse zu geben, die sich angemeldet haben.
+        Dabei soll beim Anlegen einer Veranstaltung in der Anwendung festgelegt werden, welche zusätzlichen Aspekte zu beachten sind. Beim Anmelden
+        kann der Interessent dann aus den vorher festgelegten Punkten ausgewählen, welche bei ihnm zu beachten sind. Außerdem sollen
+        in vergangenen Veranstaltungen verwendete Attribute wiedervervendet werden können (z.B. als Vorschlag in einer Drop-Down-Liste).
+
+
+    3. Projektbegründung
+        Diese Informationen kommen allerdings nicht immer zuverlässig bei den Veranstaltern an,
+        da diese häufig in einer im nachhinein kommenden E-Mail oder auch nur auf einem Notizzettel erwähnt werden
+        und diese dann vorallem bei kurzfristiger Weitergabe übersehen werden oder verloren gehen.
+
+    4. Projektschnittstellen
+        Die Speicherung der Daten findet auf einem extern gehosteten MySQL- und Webserver statt, auf dem die Anwendung dann auch auch laufen soll.
+        Dieser wird bereits auch für andere Projekte der ICP Stiftung benutzt.
+        (Zählt Composer auch als Schnittstelle?)  
+    5. Projektabgrenzung
+
+        
+ 
+2. Projektplanung
+    1.Projektphasen
+        Das Projekt wurde in dem Zeitraum vom 29.04.2024 - 31.05.2024 in der betriesbüblichen Arbeitszeit bearbeitet. Für das Projekt wurden insgesamt 80 Stunden angesetzt.
+        Eine detaillierte Zeitplanung ist im Anhang unter xxx zu finden.
+    2.Ressourcenplanung
+    Ressourcenplanung im Anhang
+     {Personal 
+      Hardware
+      Software}
+    3.Entwicklungsprozess
+    (Git,Composer, offener/agiler? Prozess)        
+
+
+3. Analysephase
+    1.Ist-Analyse
+    2.Wirtschaftlichkeitsanalyse
+    (Brauche Werte von Ausbilder)
+    Kostenreduktion durch Zeitersparnis für die Ausbilder
+    3.Lastenheft
+    (Antrag dafür benutzen)
+
+4. Entwurfsphase
+    1.Zielplatform
+        Webanwendung PHP 7.4 sowie MySQL Datenbankserver
+    2.Architekturdesign
+        Die Anwendung richtet sich nach dem MVC-Pattern (Model-View-Controller) aus. 
+        Dabei wurde die Anwendung in Views, Controller und Modell unterteilt.
+        MVC -> eventuell keine strikte Einhaltung, da quasi erstes MVC Projekt des Autors
+        beispielhaft Yii Framework als Orientierung (wurde kurze Zeit in Betracht gezogen für das Projekt, Autor entschied sich jedoch wegen mangelnder Erfahrung damit dagegen)
+        Orientierung an CRUD-Operationen
+        Nutzung von Composer Autoloader
+    3.Entwurf der Benutzeroberfläche
+        Bei der Benutzeroberfläche wurde vo allem auf eine einfache Bedienung geachtet. Da die Websiten der Stiftung und des Berufsbildungswerkes
+        jedoch von extern bereitgestellt wird, lagen keine konkreten Regeln für das Design der Oberfläche vor, es wurde allerdings versucht,
+        zumindest farblich eine Ähnlichkeit zu dem Webauftritt des BBWs herzustellen.
+    4.Datenmodell
+        Entwurf Tabellenmodell
+        Änderungen während 
+    5.Maßnahmen zur Qualitätsicherung
+        Schutz vor Sql-Injektion und (zumindest teilweise) XSS-attacks, Whiteboxtesting 
+    6. Pflichtenheft
+
+5. Implementierungsphase
+    1.Models
+    2.Views
+    3.Controller
+    4.Routing
+
+6. Abnahme
+
+7. Dokumentation
+
+8. Fazit
+    1.Soll-/Ist-Vergleich
+    2.Lessons Learned
+ 
+9. Abbildungsverzeichnis
+
+11. Abkürzungsverzeichnis
+
+BBW	Berufsbildungswerk
+ICP	Integrationszentum für Cerbralparesen
+XSS
+CI/CD
+PHP
+HTML
+CSS
+UML
+MVC
+
+12. Anlagen
